@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去噪结果展示</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            width: 70%; /* Increase container width */
+            max-width: 1400px; /* Maximum width for larger displays */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .images {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .image-container {
+            width: 48%; /* Slightly smaller than 50% */
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 700px; /* Increase max-width */
+            max-height: 700px; /* Increase max-height */
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .caption {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>去噪处理结果</h1>
+
+        <div class="images">
+            <!-- 原始图像展示 -->
+            <div class="image-container">
+                <h3>原始图像</h3>
+                <img src="{{ url_for('uploaded_file', filename=original_filename) }}" alt="Original Image">
+<!--                <p class="caption">原始图像展示</p>-->
+            </div>
+
+            <!-- 去噪后图像展示 -->
+            <div class="image-container">
+                <h3>去噪后的图像</h3>
+                <img src="{{ url_for('static', filename=denoised_filename) }}" alt="Denoised Image">
+<!--                <p class="caption">去噪后的图像展示</p>-->
+            </div>
+        </div>
+
+        <!-- 返回主页按钮 -->
+        <a href="{{ url_for('index') }}">
+            <button class="button">返回上传页面</button>
+        </a>
+    </div>
+</body>
+</html>
