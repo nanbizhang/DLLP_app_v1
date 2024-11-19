@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Interpolation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            margin: 20px;
+        }
+        img {
+            width: 200px;
+            height: auto;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Interpolation Demo</h1>
+    <div class="container">
+        <input type="file" id="imgInput" multiple accept="image/*">
+        <button class="btn" onclick="uploadImages()">Predict</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        function uploadImages() {
+            const files = document.getElementById('imgInput').files;
+            if (files.length !== 2) {
+                alert('请上传两张图片');
+                return;
+            }
+
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images', files[i]);
+            }
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <h2>Predicted Images</h2>
+                    <img src="${data.img1}" alt="Image 1">
+                    <img src="${data.img2}" alt="Image 2">
+                    <img src="${data.img3}" alt="Image 3">
+                `;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
